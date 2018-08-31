@@ -6,6 +6,4 @@ trait Random[F[_]] {
 
 object Random {
   def apply[F[_]](implicit F: Random[F]): Random[F] = F
-
-  implicit val RandomIO: Random[IO] = (upper: Int) => IO(() => scala.util.Random.nextInt(upper))
 }

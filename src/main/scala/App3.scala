@@ -1,5 +1,6 @@
 import stdlib.ConsoleOut._
 import stdlib._
+
 import scala.util.Try
 
 /*
@@ -25,12 +26,12 @@ object App3 {
 
   def gameLoop[F[_] : Program : Random : Console](name: String): F[Unit] =
     for {
-      num <- nextInt(5).map(_ + 1)
+      num <- nextInt(5)
       _ <- putStrLn(PleaseGuess(name))
       input <- getStrLn
       _ <- printResults(name, num, input)
       repeat <- askForRepeat(name)
-      _ <- if (repeat) gameLoop(name) else finish(())
+      _ <- if (repeat) gameLoop(name) else Program[F].finish(())
 
     } yield ()
 
@@ -52,6 +53,7 @@ object App3 {
     } yield ()
   }
 
-  def mainIO: IO[Unit] = main[IO]
+  import stdlib.implicits._
 
+  def mainIO: IO[Unit] = main[IO]
 }

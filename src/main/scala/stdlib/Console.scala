@@ -8,10 +8,4 @@ trait Console[F[_]] {
 
 object Console {
   def apply[F[_]](implicit F: Console[F]): Console[F] = F
-
-  implicit val ConsoleIO: Console[IO] = new Console[IO] {
-    override def putStrLn(line: ConsoleOut): IO[Unit] = IO(() => println(line.en))
-
-    override def getStrLn: IO[String] = IO(() => readLine())
-  }
 }
